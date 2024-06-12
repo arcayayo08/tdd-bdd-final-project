@@ -47,6 +47,12 @@ def step_impl(context):
     # load the database with new products
     #
     for row in context.table:
-        #
-        # ADD YOUR CODE HERE TO CREATE PRODUCTS VIA THE REST API
-        #
+        payload = {
+            "name": row['name'],
+            "category": row['category'],
+            "available": row['available'] in ['True', 'true', '1'],
+            "gender": row['gender'],
+            "birthday": row['birthday']
+        }
+        response = requests.post(f"{context.base_url}/pets", json=payload)
+        assert response.status_code == 201
