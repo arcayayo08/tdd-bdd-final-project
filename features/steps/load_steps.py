@@ -49,10 +49,10 @@ def step_impl(context):
     for row in context.table:
         payload = {
             "name": row['name'],
-            "category": row['category'],
+            "description": row['description'],
+            "price": row['price'],
             "available": row['available'] in ['True', 'true', '1'],
-            "gender": row['gender'],
-            "birthday": row['birthday']
+            "category": row['category']
         }
-        response = requests.post(f"{context.base_url}/pets", json=payload)
-        assert response.status_code == 201
+        context.resp = requests.post(rest_endpoint, json=payload)
+        assert context.resp.status_code == HTTP_201_CREATED

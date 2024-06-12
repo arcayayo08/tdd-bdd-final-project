@@ -5,8 +5,8 @@ from os import getenv
 from selenium import webdriver
 
 WAIT_SECONDS = int(getenv('WAIT_SECONDS', '30'))
-BASE_URL = getenv('BASE_URL', 'http://localhost:8080')
-DRIVER = getenv('DRIVER', 'firefox').lower()
+BASE_URL = getenv('BASE_URL', 'http://localhost:5000')
+DRIVER = getenv('DRIVER', 'chrome').lower()
 
 
 def before_all(context):
@@ -14,10 +14,10 @@ def before_all(context):
     context.base_url = BASE_URL
     context.wait_seconds = WAIT_SECONDS
     # Select either Chrome or Firefox
-    if 'firefox' in DRIVER:
-        context.driver = get_firefox()
-    else:
+    if 'chrome' in DRIVER:
         context.driver = get_chrome()
+    else:
+        context.driver = get_firefox()
     context.driver.implicitly_wait(context.wait_seconds)
     context.config.setup_logging()
 
